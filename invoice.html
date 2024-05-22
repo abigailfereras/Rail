@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - THE RAIL</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #c21808;
+        }
+        .invoice-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .invoice-details div {
+            flex: 1;
+        }
+        .invoice-items {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .invoice-items th, .invoice-items td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .invoice-total {
+            text-align: right;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #c21808;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #9b1306;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RECEIPT</h1>
+        </header>
+        <div class="invoice-details">
+            <div>
+                <h2>Order Details</h2>
+                <p><strong>Order ID:</strong> #123456</p>
+                <p><strong>Date:</strong> MM-DD-YYYY</p>
+            </div>
+            <div>
+                <h2>Customer Information</h2>
+                <p><strong>Name: </strong>Customer</p>
+                <p><strong>Email: </strong>#####</p>
+                <p><strong>Address: </strong>Philippines</p>
+            </div>
+        </div>
+        <table class="invoice-items">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="invoice-items">
+            </tbody>
+        </table>
+        <div class="invoice-total">
+            <strong>Total:</strong> ₱<span id="total-price"></span>
+        </div>
+        <a href="#" id="proceed-to-payment" class="button">Proceed to Payment</a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const totalPrice = parseFloat(localStorage.getItem('totalPrice')) || 0;
+
+            const invoiceItemsContainer = document.getElementById('invoice-items');
+            const totalPriceContainer = document.getElementById('total-price');
+
+            cartItems.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>₱${item.totalPrice.toFixed(2)}</td>
+                `;
+                invoiceItemsContainer.appendChild(row);
+            });
+
+            totalPriceContainer.textContent = totalPrice.toFixed(2);
+
+            // Handle click on "Proceed to Payment" button
+            document.getElementById('proceed-to-payment').addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                alert('Thank you for your purchase!');
+            });
+        });
+    </script>
+</body>
+</html>
